@@ -17,16 +17,6 @@ public class Post {
 
     // Constructors
 
-    public Post(Long id, String user, String urlImage, LocalDate date, Long likes, Long comments, Long shares) {
-        this.id = (id == null) ? new Random().nextLong() : id;
-        this.user = user;
-        this.urlImage = urlImage;
-        this.date = date;
-        this.likes = likes;
-        this.comments = comments;
-        this.shares = shares;
-    }
-
     public Post(Long id, String user, String urlImage, String content, LocalDate date, Long likes, Long comments, Long shares) {
         this.id = (id == null) ? new Random().nextLong() : id;
         this.user = user;
