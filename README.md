@@ -1,2 +1,2 @@
-# viblr
-A social media project, developed in Java using Springboot.
+# GymTime
+GymTime is the social media where training and competition come together. Share your routine, challenge friends, and reach your goals with real-time motivation.
