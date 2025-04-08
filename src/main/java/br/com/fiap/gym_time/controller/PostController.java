@@ -5,7 +5,8 @@ import java.util.List;
 
 import org.slf4j.Logger;
  import org.slf4j.LoggerFactory;
- import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import br.com.fiap.gym_time.models.Post;
+import br.com.fiap.gym_time.repository.PostRepository;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/posts")
@@ -25,19 +28,20 @@ public class PostController {
 
     private Logger log = LoggerFactory.getLogger(getClass());
     // List of all posts
-    private List<Post> posts = new ArrayList<>();
+    @Autowired
+    private PostRepository repository;
 
     // Get all posts
     @GetMapping()
     public List<Post> getPosts() {
-        return posts;
+        return repository.findAll();
     }
     
     // Create a new post
     @PostMapping()
-    public ResponseEntity<Post> createPost(@RequestBody Post post) {
+    public ResponseEntity<Post> createPost(@RequestBody @Valid Post post) {
         log.info("Posting...");
-        posts.add(post);
+        repository.save(post);
         return ResponseEntity.status(201).body(post);
     }
     
@@ -52,23 +56,21 @@ public class PostController {
     @DeleteMapping("/{id}")
     public void deletePost(@PathVariable Long id) {
         log.info("Deleting post " + id);
-        posts.remove(getPost(id));
+        repository.delete(getPost(id));
     }    
 
     // Update a post
     @PutMapping("/{id}")
-    public void updatePost(@PathVariable Long id, @RequestBody Post post) {
+    public void updatePost(@PathVariable Long id, @RequestBody @Valid Post post) {
         log.info("Updating post " + id);
-        posts.remove(getPost(id));
+        repository.delete(getPost(id));
         post.setId(id);
-        posts.add(post);
+        repository.save(post);
     }
 
     private Post getPost(Long id) {
-        return posts
-            .stream()
-            .filter(p -> p.getId().equals(id)) 
-            .findFirst()
+        return repository
+            .findById(id)
             .orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
             );
