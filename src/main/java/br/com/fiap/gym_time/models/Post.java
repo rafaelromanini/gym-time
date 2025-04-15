@@ -6,7 +6,7 @@ import java.util.Random;
 // Attributes
 public class Post {
     private Long id;
-    private String user;
+    private String account;
     private String urlImage;
     private String content;
     private LocalDate date;
@@ -17,9 +17,9 @@ public class Post {
 
     // Constructors
 
-    public Post(Long id, String user, String urlImage, String content, LocalDate date, Long likes, Long comments, Long shares) {
+    public Post(Long id, String account, String urlImage, String content, LocalDate date, Long likes, Long comments, Long shares) {
         this.id = (id == null) ? new Random().nextLong() : id;
-        this.user = user;
+        this.account = account;
         this.urlImage = urlImage;
         this.content = content;
         this.date = date;
@@ -38,12 +38,12 @@ public class Post {
         this.id = id;
     }
 
-    public String getUser() {
-        return user;
+    public String getAccount() {
+        return account;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public String getUrlImage() {

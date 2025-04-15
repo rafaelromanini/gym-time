@@ -27,7 +27,7 @@ public class PostController {
     // Create a new post
     @PostMapping("/posts")
     public ResponseEntity<Post> createPost(@RequestBody Post post) {
-        System.out.println(("Creating post by " + post.getUser()));
+        System.out.println(("Creating post by " + post.getAccount()));
         posts.add(post);
         return ResponseEntity.status(201).body(post);
     }
